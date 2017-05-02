@@ -3,12 +3,17 @@
 Let's learn observables through a series of challenges.  **I strongly recommend** you avoid googling for relevant samples.  You'll learn better if you take the time to explore (and fail) on your own rather than copy-pasting.
 
 ## Getting started
+
+You can either start by cloning this repository, then running:
+
 ```
 npm install
 npm start
 ```
 
-# Challenge #1 - A Simple calculator
+Or you can use [this codepen](https://codepen.io/anon/pen/jmwepN?editors=1111) which already has rxjs included, ready for use.
+
+## Challenge #1 - A "simple" calculator
 
 Learn the basics of observable event data sources.
 
@@ -32,14 +37,14 @@ Add the following elements to your application:
 > 
 >  Total: 4
 
-# Challenge #2 - Need some Zen?
+## Challenge #2 - Need some Zen?
 
 Do you need some zen?  Use multiple api-driven observables to find out.
 
-Create an application with a single button: "Need some Zen?".  When the button is pressed, a request should be made to `GET https://yesno.wtf/api`, which will assess your present state of mind and tell you if Zen is needed.
+Create an application with a single button: "Need some Zen?".  When the button is pressed, a request should be made to `GET https://yesno.wtf/api`, which will assess the user's present state of mind and return whether Zen is needed.
 
 ```
-Sample API response:
+// GET https://yesno.wtf/api
 {
 	"answer": "no",
 	"forced": false,
@@ -47,9 +52,16 @@ Sample API response:
 }
 ```
 
-If you do need Zen, a follow-up request should be made to `GET https://api.github.com/zen` to return your prescribed inspiration.
+If Zen is needed, a follow-up request should be made to `GET https://api.github.com/zen` to return the prescribed inspiration.
 
-Since things happening quickly is clearly not Zen, the following optimizations can be considered:
+```
+// GET https://api.github.com/zen 
+Mind your words, they are important.
+```
+
+If no Zen is needed, a simple "Have a nice day" message should suffice.
+
+Since things happening quickly is clearly not Zen, the following optimizations should be considered:
 - Request throttling to each API individually, or API requests globally
 - Introduce a delay between button click and API request
 - Slowly animate fade in/out effects (using observables of course!) for all messages
