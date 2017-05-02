@@ -1,97 +1,57 @@
-# react-webpack-babel
-Simple React Webpack Babel Starter Kit
+# JSCN Observables Workshop
 
-Tired of complicated starters with 200MB of dependencies which are hard to understand and modify?
+Let's learn observables through a series of challenges.  **I strongly recommend** you avoid googling for relevant samples.  You'll learn better if you take the time to explore (and fail) on your own rather than copy-pasting.
 
-Try this is a simple [React](https://facebook.github.io/react/), [Webpack](http://webpack.github.io/) and [Babel](https://babeljs.io/) application with nothing else in it.
-
-### What's in it?
-
-* Simple src/index.jsx and src/index.css (local module css).
-* Webpack configuration for development (with hot reloading) and production (with minification).
-* CSS module loading, so you can include your css by ```import styles from './path/to.css';```.
-* Both js(x) and css hot loaded during development.
-* [Webpack Dashboard Plugin](https://github.com/FormidableLabs/webpack-dashboard) on dev server.
-
-### To run
-
-* You'll need to have [git](https://git-scm.com/) and [node](https://nodejs.org/en/) installed in your system.
-* Fork and clone the project:
-
-```
-git clone https://github.com/alicoding/react-webpack-babel.git
-```
-
-* Then install the dependencies:
-
+## Getting started
 ```
 npm install
-```
-
-* Run development server:
-
-```
 npm start
 ```
 
-* Or you can run development server with [webpack-dashboard](https://github.com/FormidableLabs/webpack-dashboard):
+# Challenge #1 - A Simple calculator
+
+Learn the basics of observable event data sources.
+
+Add the following elements to your application:
+- A result field, displaying a sum starting at 0
+- Two buttons: Add 1, Subtract 1
+- When Add 1 is clicked, the sum total is incremented by 1.  When Subtract 1 is clicked, decrement by 1.
+- A log of all operations that have occurred.
+- BONUS: Add a "Square it" button which will multiply the sum total by itself.  Since this is such a "dangerous" operation, the user must press the button three times in rapid (within 1000 ms) succession.
+
+### Sample Output
+
+> [Add 1]    [Subtract 1]    [Square it]
+>
+> Log:
+>   - ADD 1
+>   - ADD 1
+>   - ADD 1
+>   - SUBTRACT 1
+>   - SQUARE IT
+> 
+>  Total: 4
+
+# Challenge #2 - Need some Zen?
+
+Do you need some zen?  Use multiple api-driven observables to find out.
+
+Create an application with a single button: "Need some Zen?".  When the button is pressed, a request should be made to `GET https://yesno.wtf/api`, which will assess your present state of mind and tell you if Zen is needed.
 
 ```
-npm run dev
-```
-
-Open the web browser to `http://localhost:8888/`
-
-### To build the production package
-
-```
-npm run build
-```
-
-### Nginx Config
-
-Here is an example Nginx config:
-```
-server {
-	# ... root and other options
-
-	gzip on;
-	gzip_http_version 1.1;
-	gzip_types text/plain text/css text/xml application/javascript image/svg+xml;
-
-	location / {
-		try_files $uri $uri/ /index.html;
-	}
-
-	location ~ \.html?$ {
-		expires 1d;
-	}
-
-	location ~ \.(svg|ttf|js|css|svgz|eot|otf|woff|jpg|jpeg|gif|png|ico)$ {
-		access_log off;
-		log_not_found off;
-		expires max;
-	}
+Sample API response:
+{
+	"answer": "no",
+	"forced": false,
+	"image": "https://yesno.wtf/assets/no/1-c7d128c95c1740ec76e120146c870f0b.gif"
 }
 ```
 
-### Eslint
-There is a .eslint.yaml config for eslint ready with React plugin.
-To use it, you need to install additional dependencies though:
+If you do need Zen, a follow-up request should be made to `GET https://api.github.com/zen` to return your prescribed inspiration.
 
-```
-npm install --save-dev eslint eslint-plugin-react
-```
+Since things happening quickly is clearly not Zen, the following optimizations can be considered:
+- Request throttling to each API individually, or API requests globally
+- Introduce a delay between button click and API request
+- Slowly animate fade in/out effects (using observables of course!) for all messages
+- Handle error scenarios.  If APIs are down or connectivity is lost, backup Zen should be applied.
 
-To do the actual linting, run:
-
-```
-npm run lint
-```
-
-### Notes on importing css styles
-* styles having /src/ in their absolute path are considered part of the application and exported as local css modules.
-* other styles are considered global styles used by many components and are included in the css bundle directly.
-
-### Contribute
-Please contribute to the project if you know how to make it better, including this README :)
